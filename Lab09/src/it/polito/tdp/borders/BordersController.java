@@ -10,12 +10,14 @@ import java.util.ResourceBundle;
 import it.polito.tdp.borders.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 
 public class BordersController {
 
-	Model model;
+	private Model model;
 
 	@FXML // ResourceBundle that was given to the FXMLLoader
 	private ResourceBundle resources;
@@ -32,12 +34,39 @@ public class BordersController {
 	@FXML
 	void doCalcolaConfini(ActionEvent event) {
 
-		txtResult.setText("Todo!");
+		String anno= txtAnno.getText();
+		if( anno != null && !anno.isEmpty()) {
+			if(model.isDigit(anno)) {
+				txtResult.setText(model.creaGrafo(anno));
+				
+				
+			} else {
+				showAlert("Inserisci un anno valido  ");
+			}
+			
+		}else {
+			showAlert("Inserire un anno");
+		}
+		
+		
+	}
+
+	private void showAlert(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setContentText(message);
+		alert.show();
+		
 	}
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 		assert txtAnno != null : "fx:id=\"txtAnno\" was not injected: check your FXML file 'Borders.fxml'.";
 		assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Borders.fxml'.";
+	}
+
+	 void setModel(Model model) {
+		this.model = model;
+		// TODO Auto-generated method stub
+		
 	}
 }
