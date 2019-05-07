@@ -30,14 +30,17 @@ public class Model {
 		dao.popolaGrafo(graph,anno);
 		String risultato="";
 		
+		//cerco archi adiacenti
 		for(Country c: graph.vertexSet()) {
 			risultato+= c.toString() + " Grado del vertice: "+graph.degreeOf(c) +"\n";
 		}
 		
-		return risultato;
-		
+
+		//cerco componente connessa: visita in profondità
 		ConnectivityInspector<Country, DefaultEdge> inspector = new ConnectivityInspector<>(graph);
+		risultato+= " Componente connessa: " +inspector.connectedSets().size();
 		
+		return risultato;
 	}
 
 
